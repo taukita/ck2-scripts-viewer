@@ -15,9 +15,7 @@ namespace Ck2ScriptsParser
 			select new Comment(comment);
 
 		public static Parser<SyntaxUnit> SymbolParser =
-			from symbol in
-				Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '_', "Ожидаются только буквы, числа, '.' или '_'.")
-				     .Many()
+			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '_', "Ожидаются только буквы, числа, '.' или '_'.").Many()
 			select new Symbol(new string(symbol.ToArray()));
 
 		public static Parser<SyntaxUnit> DoubleQuotedSymbolParser =
@@ -26,8 +24,23 @@ namespace Ck2ScriptsParser
 			from dq2 in Parse.Char('"')
 			select new Symbol(new string(symbol.ToArray()));
 
-		public static Parser<SyntaxUnit> PairParser = null;
+		public static Parser<SyntaxUnit> PairParser =
+			from key in SymbolParser.Or(DoubleQuotedSymbolParser)
+			from spaces1 in Parse.WhiteSpace.Many()
+			from eq in Parse.Char('=')
+			from spaces2 in Parse.WhiteSpace.Many()
+			from value in SymbolParser.Or(DoubleQuotedSymbolParser).Or(Parse.Ref(() => TableParser))
+			select new Pair((Symbol)key, value);
 
-		public static Parser<SyntaxUnit> TableParser = null;
+		public static Parser<SyntaxUnit> TableParser =
+			from open in Parse.Char('{')
+			from spaces1 in Parse.WhiteSpace.Many()
+			from pairs in
+				(from pairOrComment in PairParser.Or(CommentParser)
+				 from spaces2 in Parse.WhiteSpace.Many()
+				 select pairOrComment).Many()
+			from spaces3 in Parse.WhiteSpace.Many()
+			from close in Parse.Char('}')
+			select new Table(pairs.OfType<Pair>());
 	}
 }

@@ -12,9 +12,14 @@ namespace Ck2ScriptsParser
 		static void Main(string[] args)
 		{
 			string source = @"
-	#ololo
+	{
+		#ololo comment
+		a = b
+		c = 5.0.12#this is comment too
+		d = {d = d}
+	}
 ";
-			var c = Parser.CommentParser.Token().Parse(source);
+			var c = Parser.TableParser.Token().Parse(source);
 
 			Console.WriteLine(c.ToString());
 			Console.ReadKey(false);
