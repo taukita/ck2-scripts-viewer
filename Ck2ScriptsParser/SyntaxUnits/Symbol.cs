@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ck2ScriptsParser.SyntaxUnits
 {
-	class Symbol : SyntaxUnit
+	public class Symbol : SyntaxUnit
 	{
 		private readonly string _value;
 

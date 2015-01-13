@@ -52,6 +52,7 @@
     <Compile Include="SyntaxUnits\Pair.cs" />
     <Compile Include="SyntaxUnits\Symbol.cs" />
     <Compile Include="SyntaxUnits\Table.cs" />
+    <Compile Include="TreeModel\Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

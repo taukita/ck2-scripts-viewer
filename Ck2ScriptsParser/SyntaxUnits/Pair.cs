@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ck2ScriptsParser.SyntaxUnits
 {
-	class Pair : SyntaxUnit
+	public class Pair : SyntaxUnit
 	{
 		public Pair(Symbol key, object value)
 		{

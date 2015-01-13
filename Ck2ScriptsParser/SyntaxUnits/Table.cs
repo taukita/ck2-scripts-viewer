@@ -6,18 +6,22 @@ using System.Threading.Tasks;
 
 namespace Ck2ScriptsParser.SyntaxUnits
 {
-	class Table : SyntaxUnit
+	public class Table : SyntaxUnit
 	{
-		private readonly List<Pair> _pairs;
+		public List<Pair> Pairs
+		{
+			get;
+			private set;
+		}
 
 		public Table(IEnumerable<Pair> pairs)
 		{
-			_pairs = pairs as List<Pair> ?? pairs.ToList();
+			Pairs = pairs as List<Pair> ?? pairs.ToList();
 		}
 
 		public override string ToString()
 		{
-			return "{ " + string.Join(" ", _pairs.Select(p => p.ToString())) + " }";
+			return "{ " + string.Join(" ", Pairs.Select(p => p.ToString())) + " }";
 		}
 	}
 }
