@@ -11,7 +11,7 @@ namespace Ck2ScriptsParser
 	public static class Parser
 	{
 		public static Parser<SyntaxUnit> CommentParser =
-			from comment in Parse.Regex("#.*")
+			from comment in Parse.Regex("#.*\r\n")
 			select new Comment(comment);
 
 		public static Parser<SyntaxUnit> SymbolParser =
@@ -32,15 +32,19 @@ namespace Ck2ScriptsParser
 			from value in SymbolParser.Or(DoubleQuotedSymbolParser).Or(Parse.Ref(() => TableParser))
 			select new Pair((Symbol)key, value);
 
-		public static Parser<SyntaxUnit> TableParser =
-			from open in Parse.Char('{')
-			from spaces1 in Parse.WhiteSpace.Many()
-			from pairs in
-				(from pairOrComment in PairParser.Or(CommentParser)
-				 from spaces2 in Parse.WhiteSpace.Many()
-				 select pairOrComment).Many()
-			from spaces3 in Parse.WhiteSpace.Many()
-			from close in Parse.Char('}')
-			select new Table(pairs.OfType<Pair>());
+	    public static Parser<List<SyntaxUnit>> ListParser =
+	        from syntaxUnits in
+	            (from syntaxUnit in PairParser.Or(CommentParser).Or(SymbolParser)
+	             from spaces2 in Parse.WhiteSpace.Many()
+	             select syntaxUnit).Many()
+	        select syntaxUnits.ToList();
+
+	    public static Parser<SyntaxUnit> TableParser =
+	        from open in Parse.Char('{')
+	        from spaces1 in Parse.WhiteSpace.Many()
+	        from syntaxUnits in ListParser
+	        from spaces3 in Parse.WhiteSpace.Many()
+	        from close in Parse.Char('}')
+	        select new Table(syntaxUnits);
 	}
 }

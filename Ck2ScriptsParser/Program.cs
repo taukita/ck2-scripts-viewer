@@ -17,6 +17,7 @@ namespace Ck2ScriptsParser
 		a = b
 		c = 5.0.12#this is comment too
 		d = {d = d}
+		r = { sy }
 	}
 ";
 			var c = Parser.TableParser.Token().Parse(source);

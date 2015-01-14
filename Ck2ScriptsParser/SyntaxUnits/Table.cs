@@ -8,20 +8,20 @@ namespace Ck2ScriptsParser.SyntaxUnits
 {
 	public class Table : SyntaxUnit
 	{
-		public List<Pair> Pairs
+		public List<SyntaxUnit> Units
 		{
 			get;
 			private set;
 		}
 
-		public Table(IEnumerable<Pair> pairs)
+		public Table(IEnumerable<SyntaxUnit> pairs)
 		{
-			Pairs = pairs as List<Pair> ?? pairs.ToList();
+			Units = pairs as List<SyntaxUnit> ?? pairs.ToList();
 		}
 
 		public override string ToString()
 		{
-			return "{ " + string.Join(" ", Pairs.Select(p => p.ToString())) + " }";
+			return "{ " + string.Join(" ", Units.Select(p => p.ToString())) + " }";
 		}
 	}
 }

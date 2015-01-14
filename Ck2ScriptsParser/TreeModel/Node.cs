@@ -12,20 +12,19 @@ namespace Ck2ScriptsParser.TreeModel
 		public Node(string name, Table table)
 		{
 			Name = name;
-			Children = table.Pairs.Select(p =>
-				{
-					if (p.Value is Symbol)
-					{
-						return new Node(p.Key.ToString(), p.Value.ToString());
-					}
-					return new Node(p.Key.ToString(), (Table)p.Value);
-				}).ToList();
+		    Children = table.Units.Where(u => !(u is Comment)).Select(FromSyntaxUnit).ToList();
 		}
 
 		public Node(string name, string value)
 		{
 			Name = name;
 			Value = value;
+			Children = new List<Node>();
+		}
+
+		public Node(string name)
+		{
+			Name = name;
 			Children = new List<Node>();
 		}
 
@@ -54,5 +53,31 @@ namespace Ck2ScriptsParser.TreeModel
 			get;
 			set;
 		}
+
+        public static Node FromSyntaxUnit(SyntaxUnit su)
+        {
+            if (su is Symbol)
+            {
+                return new Node(su.ToString());
+            }
+            if (su is Pair)
+            {
+                var pair = (Pair)su;
+                if (pair.Value is Symbol)
+                {
+                    return new Node(pair.Key.ToString(), pair.Value.ToString());
+                }
+                if (pair.Value is Table)
+                {
+                    return new Node(pair.Key.ToString(), (Table)pair.Value);
+                }
+                throw new InvalidOperationException();
+            }
+            if (su is Table)
+            {
+                return new Node(string.Empty, (Table)su);
+            }
+            throw new InvalidOperationException();
+        }
 	}
 }
