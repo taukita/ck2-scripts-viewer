@@ -15,7 +15,7 @@ namespace Ck2ScriptsParser
 			select new Comment(comment);
 
 		public static Parser<SyntaxUnit> SymbolParser =
-			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '_', "Ожидаются только буквы, числа, '.' или '_'.").Many()
+			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_', "Ожидаются только буквы, числа, '.', '-' или '_'.").Many()
 			select new Symbol(new string(symbol.ToArray()));
 
 		public static Parser<SyntaxUnit> DoubleQuotedSymbolParser =
