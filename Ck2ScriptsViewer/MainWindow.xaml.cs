@@ -29,30 +29,21 @@ namespace Ck2ScriptsViewer
 		public MainWindow()
 		{
 			InitializeComponent();
-			string source = @"
-	{
-		#ololo comment
-		a = b
-		c = 5.0.12#this is comment too
-		d = {d = d}
-		r = { sy }
-	}
-";
-			var c = Parser.TableParser.Token().Parse(source);
-			var node = new Node("ROOT", (Ck2ScriptsParser.SyntaxUnits.Table) c);
-			ScriptView.DataContext = node;
 		}
 
 	    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
 	    {
-            var openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
+            var openFileDialog = new OpenFileDialog {Multiselect = true};
+	        if (openFileDialog.ShowDialog() == true)
             {
                 try
                 {
-                    var text = File.ReadAllText(openFileDialog.FileName);
-                    var su = Parser.ListParser.Token().End().Parse(text);
-                    var node = Node.FromSyntaxUnit(new Ck2ScriptsParser.SyntaxUnits.Table(su));
+                    var list = new List<SyntaxUnit>();
+                    foreach (var su in openFileDialog.FileNames.Select(File.ReadAllText).Select(text => Parser.ListParser.Token().End().Parse(text)))
+                    {
+                        list.AddRange(su);
+                    }
+                    var node = Node.FromSyntaxUnit(new Ck2ScriptsParser.SyntaxUnits.Table(list));
                     ScriptView.DataContext = node;
                 }
                 catch (Exception exception)
