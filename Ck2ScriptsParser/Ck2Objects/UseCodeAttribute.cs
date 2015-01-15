@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ck2ScriptsParser
+namespace Ck2ScriptsParser.Ck2Objects
 {
-	public abstract class SyntaxUnit
+	public class UseCodeAttribute : Attribute
 	{
-		public abstract void BuildSource(StringBuilder builder, int indentation);
 	}
 }

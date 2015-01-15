@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ck2ScriptObjects;
+using Ck2ScriptsParser.Ck2Objects;
 using Sprache;
 
 namespace Ck2ScriptsParser
@@ -23,6 +25,29 @@ namespace Ck2ScriptsParser
 			var c = Parser.TableParser.Token().Parse(source);
 
 			Console.WriteLine(c.ToString());
+
+			var trait = new Ck2Trait()
+			{
+				Code = "amateurish_plotter",
+
+				Education = true,
+
+				Intrigue = 1,
+				Stewardship = -1
+			};
+
+			var builder = new StringBuilder();
+			
+			trait.ToSyntaxUnit().BuildSource(builder, 0);
+
+			Console.WriteLine();
+			Console.WriteLine(builder.ToString());
+
+            //LocalizationHelper helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
+
+            //Console.WriteLine();
+            //Console.WriteLine(helper.Localize("amateurish_plotter", LocalizationHelper.English));
+
 			Console.ReadKey(false);
 		}
 	}

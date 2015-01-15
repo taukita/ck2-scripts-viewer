@@ -19,5 +19,10 @@ namespace Ck2ScriptsParser.SyntaxUnits
 		{
 			return _value;
 		}
+
+		public override void BuildSource(StringBuilder builder, int indentation)
+		{
+			builder.Append(new string('\t', indentation)).AppendLine(_value);
+		}
 	}
 }

@@ -19,5 +19,9 @@ namespace Ck2ScriptsParser.SyntaxUnits
 		{
 			return _value;
 		}
+
+		public override void BuildSource(StringBuilder builder, int indentation)
+		{
+		}
 	}
 }

@@ -8,6 +8,21 @@ namespace Ck2ScriptsParser.SyntaxUnits
 {
 	public class Table : SyntaxUnit
 	{
+		public Table()
+		{
+			Units = new List<SyntaxUnit>();
+		}
+
+		public override void BuildSource(StringBuilder builder, int indentation)
+		{
+			builder.AppendLine("{");
+			foreach (var syntaxUnit in Units)
+			{
+				syntaxUnit.BuildSource(builder, indentation + 1);
+			}
+			builder.Append(new string('\t', indentation)).AppendLine("}");
+		}
+
 		public List<SyntaxUnit> Units
 		{
 			get;
