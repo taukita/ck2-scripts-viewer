@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ck2Objects\Ck2BaseObject.cs" />
+    <Compile Include="Ck2Objects\Ck2Condition.cs" />
     <Compile Include="Ck2Objects\Ck2PropertyAttribute.cs" />
     <Compile Include="Ck2Objects\Ck2Trait.cs" />
     <Compile Include="Ck2Objects\UseCodeAttribute.cs" />

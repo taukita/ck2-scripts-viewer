@@ -330,5 +330,188 @@ namespace Ck2ScriptsParser.Ck2Objects
 	    }
 
 		#endregion
+
+		#region Relations
+
+	    [Ck2Property("ambition_opinion")]
+	    public int? AmbitionOpinion
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("vassal_opinion")]
+		public int? VassalOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("sex_appeal_opinion")]
+		public int? SexAppealOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("same_opinion")]
+		public int? SameOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("opposite_opinion")]
+		public int? OppositeOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("church_opinion")]
+		public int? ChurchOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("castle_opinion")]
+		public int? CastleOpinion
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("city_opinion")]
+		public int? CityOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("same_religion_opinion")]
+		public int? SameReligionOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("same_opinion_if_same_religion")]
+		public int? SameOpinionIfSameReligion
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("liege_opinion")]
+		public int? LiegeOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("general_opinion")]
+		public int? GeneralOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("twin_opinion")]
+		public int? TwinOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("dynasty_opinion")]
+		public int? DynastyOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("male_dynasty_opinion")]
+		public int? MaleDynastyOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("female_dynasty_opinion")]
+		public int? FemaleDynastyOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("muslim_opinion")]
+		public int? MuslimOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("child_opinion")]
+		public int? ChildOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("oldest_child_opinion")]
+		public int? OldestChildOpinion 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("spouse_opinion")]
+		public int? SpouseOpinion 
+		{
+			get;
+			set;
+		}
+
+		#endregion
+
+		#region AI Weights
+
+	    [Ck2Property("ai_rationality")]
+	    public int? AiRationality
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("ai_zeal")]
+		public int? AiZeal 
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("ai_greed")]
+		public int? AiGreed
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("ai_honor")]
+		public int? AiHonor
+	    {
+		    get;
+		    set;
+	    }
+
+		[Ck2Property("ai_ambition")]
+		public int? AiAmbition 
+		{
+			get;
+			set;
+		}
+
+		#endregion
 	}
 }
