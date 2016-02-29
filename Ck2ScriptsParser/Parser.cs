@@ -11,11 +11,11 @@ namespace Ck2ScriptsParser
 	public static class Parser
 	{
 		public static Parser<SyntaxUnit> CommentParser =
-			from comment in Parse.Regex("#.*\r\n")
+			from comment in Parse.Regex("#.*(\r\n|$)")
 			select new Comment(comment);
 
 		public static Parser<SyntaxUnit> SymbolParser =
-			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_', "Ожидаются только буквы, числа, '.', '-' или '_'.").Many()
+			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_' || c == ':' || c == '\'', "Ожидаются только буквы, числа, '.', '-', '_', ':' или '\''.").Many()
 			select new Symbol(new string(symbol.ToArray()));
 
 		public static Parser<SyntaxUnit> DoubleQuotedSymbolParser =
@@ -24,12 +24,18 @@ namespace Ck2ScriptsParser
 			from dq2 in Parse.Char('"')
 			select new Symbol(new string(symbol.ToArray()));
 
+		public static Parser<SyntaxUnit> BracketedSymbolParser =
+			from open in Parse.Char('[')
+			from symbol in SymbolParser
+			from close in Parse.Char(']')
+			select new Symbol('[' + symbol.ToString() + ']');
+
 		public static Parser<SyntaxUnit> PairParser =
 			from key in SymbolParser.Or(DoubleQuotedSymbolParser)
 			from spaces1 in Parse.WhiteSpace.Many()
 			from eq in Parse.Char('=')
 			from spaces2 in Parse.WhiteSpace.Many()
-			from value in SymbolParser.Or(DoubleQuotedSymbolParser).Or(Parse.Ref(() => TableParser))
+			from value in SymbolParser.Or(BracketedSymbolParser).Or(DoubleQuotedSymbolParser).Or(Parse.Ref(() => TableParser))
 			select new Pair((Symbol)key, value);
 
 	    public static Parser<List<SyntaxUnit>> ListParser =

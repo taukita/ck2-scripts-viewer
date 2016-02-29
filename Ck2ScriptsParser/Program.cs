@@ -14,15 +14,40 @@ namespace Ck2ScriptsParser
 		static void Main(string[] args)
 		{
 			string source = @"
-	{
-		#ololo comment
-		a = b
-		c = 5.0.12#this is comment too
-		d = {d = d}
-		r = { sy }
+#Liege get new character: Ibn al-Nafis
+character_event = {
+	id = 106036
+	desc = EVTDESC106036
+	picture = GFX_evt_council
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA106036
+		create_character = {
+			name = Ibn
+			dynasty = 1031107
+			attributes = {
+				learning = 11
+			}
+			religion = ROOT
+			culture = levantine_arabic
+			age = 23
+			female = no
+			trait = mystic
+			trait = quick
+			trait = charitable
+			trait = scholarly_theologian
+		}
+		new_character = {
+			set_character_flag = ibn_alnafis_flag
+		}
 	}
+}
+
+### Abu'l-Barakat al-Baghdadi ###
 ";
-			var c = Parser.TableParser.Token().Parse(source);
+			var c = Parser.ListParser.Token().End().Parse(source);
 
 			Console.WriteLine(c.ToString());
 

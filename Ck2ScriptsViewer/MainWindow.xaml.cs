@@ -59,11 +59,15 @@ namespace Ck2ScriptsViewer
             var openFileDialog = new OpenFileDialog {Multiselect = true};
 	        if (openFileDialog.ShowDialog() == true)
             {
+				string fileName = string.Empty;
                 try
                 {
                     var list = new List<SyntaxUnit>();
-                    foreach (var su in openFileDialog.FileNames.Select(File.ReadAllText).Select(text => Parser.ListParser.Token().End().Parse(text)))
+                    foreach (var fn in openFileDialog.FileNames)
                     {
+	                    fileName = fn;
+	                    var text = File.ReadAllText(fn);
+	                    var su = Parser.ListParser.Token()/*.End()*/.Parse(text);
                         list.AddRange(su);
                     }
                     var node = Node.FromSyntaxUnit(new Ck2ScriptsParser.SyntaxUnits.Table(list));
@@ -72,7 +76,7 @@ namespace Ck2ScriptsViewer
                 catch (Exception exception)
                 {
                     ScriptView.DataContext = null;
-                    MessageBox.Show(exception.ToString(), "Error");
+	                MessageBox.Show("Error in " + fileName + Environment.NewLine + Environment.NewLine + exception, "Error");
                 }
             }
 	    }
