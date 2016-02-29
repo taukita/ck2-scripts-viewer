@@ -30,7 +30,7 @@ namespace Ck2ScriptObjects
 
         public string Localize(string id, string language)
         {
-	        return _cache.ContainsKey(id) ? _cache[id].Localize(language) : null;
+	        return id != null && _cache.ContainsKey(id) ? _cache[id].Localize(language) : null;
         }
 
         private void Cache()
@@ -45,6 +45,11 @@ namespace Ck2ScriptObjects
                     List<string> header;
 
                     var values = textFieldParser.ReadFields();
+
+	                if (values == null)
+	                {
+		                continue;
+	                }
 
                     if (values[0] == "#CODE")
                     {

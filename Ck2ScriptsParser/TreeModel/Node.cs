@@ -92,10 +92,6 @@ namespace Ck2ScriptsParser.TreeModel
 
 		public string Localize(LocalizationHelper helper, string language = null)
 		{
-			if (Name == "desc" || Name == "name" || Name == "tooltip") //Events
-			{
-				return helper.Localize(Value, language ?? LocalizationHelper.English);
-			}
 			//Decisions or traits
 			{
 				var name = helper.Localize(Name, language ?? LocalizationHelper.English);
@@ -121,7 +117,7 @@ namespace Ck2ScriptsParser.TreeModel
 					}
 				}
 			}
-			return string.Empty;
+			return helper.Localize(Value, language ?? LocalizationHelper.English) ?? string.Empty;
 		}
 	}
 }
