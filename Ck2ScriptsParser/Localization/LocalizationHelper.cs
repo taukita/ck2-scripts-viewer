@@ -30,7 +30,7 @@ namespace Ck2ScriptObjects
 
         public string Localize(string id, string language)
         {
-            return _cache[id].Localize(language);
+	        return _cache.ContainsKey(id) ? _cache[id].Localize(language) : null;
         }
 
         private void Cache()

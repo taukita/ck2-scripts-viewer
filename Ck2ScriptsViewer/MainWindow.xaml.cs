@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ck2ScriptObjects;
 using Ck2ScriptsParser;
 using Ck2ScriptsParser.SyntaxUnits;
 using Ck2ScriptsParser.TreeModel;
@@ -26,9 +27,31 @@ namespace Ck2ScriptsViewer
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private readonly object _sync = new object();
+		private LocalizationHelper _helper;
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			Task.Factory.StartNew(() =>
+			{
+				lock (_sync)
+				{
+					_helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
+					Application.Current.Properties[typeof (LocalizationHelper)] = _helper;
+				}
+			});
+		}
+
+		internal LocalizationHelper Helper
+		{
+			get
+			{
+				lock (_sync)
+				{
+					return _helper;
+				}
+			}
 		}
 
 	    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -53,5 +76,11 @@ namespace Ck2ScriptsViewer
                 }
             }
 	    }
+
+		private void L_OnClick(object sender, RoutedEventArgs e)
+		{
+			var node = (Node) (((FrameworkElement) sender)).DataContext;
+			MessageBox.Show(node.Localize(Helper));
+		}
 	}
 }

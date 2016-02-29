@@ -43,10 +43,11 @@ namespace Ck2ScriptsParser
 			Console.WriteLine();
 			Console.WriteLine(builder.ToString());
 
-            //LocalizationHelper helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
+            LocalizationHelper helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
 
-            //Console.WriteLine();
-            //Console.WriteLine(helper.Localize("amateurish_plotter", LocalizationHelper.English));
+            Console.WriteLine();
+            Console.WriteLine(helper.Localize("amateurish_plotter", LocalizationHelper.English));
+			Console.WriteLine(helper.Localize("EVTDESC76000", LocalizationHelper.English));
 
 			Console.ReadKey(false);
 		}
