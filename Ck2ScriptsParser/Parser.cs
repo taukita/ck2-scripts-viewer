@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ck2ScriptsParser.SyntaxUnits;
 using Sprache;
@@ -11,8 +12,11 @@ namespace Ck2ScriptsParser
 	public static class Parser
 	{
 		public static Parser<SyntaxUnit> CommentParser =
-			from comment in Parse.Regex("#.*(\n|\r\n|$)")
-			select new Comment(comment);
+			from c in Parse.Char('#')
+			from cs in Parse.CharExcept("\r\n").Many()
+			from r in Parse.Char('\r').Optional()
+			from n in Parse.Char('\n').Optional()
+			select new Comment(c + new string(cs.ToArray()) + (r.IsDefined ? "\r" : "") + (n.IsDefined ? "\n" : ""));
 
 		public static Parser<SyntaxUnit> SymbolParser =
 			from symbol in Parse.Char(c => char.IsLetterOrDigit(c) || c == '.' || c == '-' || c == '_' || c == ':' || c == '\'', "Ожидаются только буквы, числа, '.', '-', '_', ':' или '\''.").Many()
