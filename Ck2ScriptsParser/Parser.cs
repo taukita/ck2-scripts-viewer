@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Ck2ScriptsParser.SyntaxUnits;
 using Sprache;
 
@@ -42,19 +38,19 @@ namespace Ck2ScriptsParser
 			from value in SymbolParser.Or(BracketedSymbolParser).Or(DoubleQuotedSymbolParser).Or(Parse.Ref(() => TableParser))
 			select new Pair((Symbol)key, value);
 
-	    public static Parser<List<SyntaxUnit>> ListParser =
-	        from syntaxUnits in
-	            (from syntaxUnit in PairParser.Or(CommentParser).Or(SymbolParser)
-	             from spaces2 in Parse.WhiteSpace.Many()
-	             select syntaxUnit).Many()
-	        select syntaxUnits.ToList();
+		public static Parser<List<SyntaxUnit>> ListParser =
+			from syntaxUnits in
+				(from syntaxUnit in PairParser.Or(CommentParser).Or(SymbolParser)
+					from spaces in Parse.WhiteSpace.Many()
+					select syntaxUnit).Many()
+			select syntaxUnits.ToList();
 
-	    public static Parser<SyntaxUnit> TableParser =
-	        from open in Parse.Char('{')
-	        from spaces1 in Parse.WhiteSpace.Many()
-	        from syntaxUnits in ListParser
-	        from spaces3 in Parse.WhiteSpace.Many()
-	        from close in Parse.Char('}')
-	        select new Table(syntaxUnits);
+		public static Parser<SyntaxUnit> TableParser =
+			from open in Parse.Char('{')
+			from spaces1 in Parse.WhiteSpace.Many()
+			from syntaxUnits in ListParser
+			from spaces2 in Parse.WhiteSpace.Many()
+			from close in Parse.Char('}')
+			select new Table(syntaxUnits);
 	}
 }
