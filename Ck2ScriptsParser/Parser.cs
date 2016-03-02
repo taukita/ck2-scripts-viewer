@@ -11,7 +11,7 @@ namespace Ck2ScriptsParser
 	public static class Parser
 	{
 		public static Parser<SyntaxUnit> CommentParser =
-			from comment in Parse.Regex("#.*(\r\n|$)")
+			from comment in Parse.Regex("#.*(\n|\r\n|$)")
 			select new Comment(comment);
 
 		public static Parser<SyntaxUnit> SymbolParser =

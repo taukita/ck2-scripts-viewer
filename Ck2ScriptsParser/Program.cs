@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ck2ScriptObjects;
 using Ck2ScriptsParser.Ck2Objects;
+using Ck2ScriptsParser.SyntaxUnits;
 using Sprache;
 
 namespace Ck2ScriptsParser
@@ -47,6 +50,7 @@ character_event = {
 
 ### Abu'l-Barakat al-Baghdadi ###
 ";
+			/*
 			var c = Parser.ListParser.Token().End().Parse(source);
 
 			Console.WriteLine(c.ToString());
@@ -67,12 +71,33 @@ character_event = {
 
 			Console.WriteLine();
 			Console.WriteLine(builder.ToString());
+			 */
 
+			var list = new List<SyntaxUnit>();
+			var dir = new DirectoryInfo(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\events");
+			var sw = new Stopwatch();
+			var sw1 = new Stopwatch();
+			foreach (var fn in Directory.GetFiles(dir.FullName))
+			{
+				sw1.Start();
+				var text = File.ReadAllText(fn);
+				sw1.Stop();
+				sw.Start();
+				var su = Parser.ListParser.Token().End().Parse(text);
+				list.Add(new Pair(new Symbol(fn), new Table(su)));
+				sw.Stop();
+			}
+
+			Console.WriteLine("Parsing {0} sec", sw.ElapsedMilliseconds/1000);
+			Console.WriteLine("File reading {0} sec", sw1.ElapsedMilliseconds / 1000);
+
+			/*
             LocalizationHelper helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
 
             Console.WriteLine();
             Console.WriteLine(helper.Localize("amateurish_plotter", LocalizationHelper.English));
 			Console.WriteLine(helper.Localize("EVTDESC76000", LocalizationHelper.English));
+			 */
 
 			Console.ReadKey(false);
 		}

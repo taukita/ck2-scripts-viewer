@@ -67,8 +67,8 @@ namespace Ck2ScriptsViewer
                     {
 	                    fileName = fn;
 	                    var text = File.ReadAllText(fn);
-	                    var su = Parser.ListParser.Token()/*.End()*/.Parse(text);
-                        list.AddRange(su);
+	                    var su = Parser.ListParser.Token().End().Parse(text);
+	                    list.Add(new Pair(new Symbol(fileName), new Ck2ScriptsParser.SyntaxUnits.Table(su)));
                     }
                     var node = Node.FromSyntaxUnit(new Ck2ScriptsParser.SyntaxUnits.Table(list));
                     ScriptView.DataContext = node;
