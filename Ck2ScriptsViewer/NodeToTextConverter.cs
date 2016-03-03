@@ -21,8 +21,8 @@ namespace Ck2ScriptsViewer
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var node = value as Ck2ScriptsParser.TreeModel.Node;
-			return node != null && node.IsLocalizable
-				? node.Localize(Application.Current.Properties[typeof (LocalizationHelper)] as LocalizationHelper)
+			return node != null && !node.Metadata.IsRoot && !node.Metadata.IsFile
+				? node.TryLocalize(Application.Current.Properties[typeof (LocalizationHelper)] as LocalizationHelper)
 				: string.Empty;
 		}
 

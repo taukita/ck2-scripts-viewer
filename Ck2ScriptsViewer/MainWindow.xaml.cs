@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Ck2ScriptObjects;
 using Ck2ScriptsParser;
 using Ck2ScriptsParser.SyntaxUnits;
@@ -23,7 +13,7 @@ using Sprache;
 namespace Ck2ScriptsViewer
 {
 	/// <summary>
-	/// Interaction logic for MainWindow.xaml
+	///     Interaction logic for MainWindow.xaml
 	/// </summary>
 	public partial class MainWindow : Window
 	{
@@ -54,37 +44,39 @@ namespace Ck2ScriptsViewer
 			}
 		}
 
-	    private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-	    {
-            var openFileDialog = new OpenFileDialog {Multiselect = true};
-	        if (openFileDialog.ShowDialog() == true)
-            {
-				string fileName = string.Empty;
-                try
-                {
-                    var list = new List<SyntaxUnit>();
-                    foreach (var fn in openFileDialog.FileNames)
-                    {
-	                    fileName = fn;
-	                    var text = File.ReadAllText(fn);
-	                    var su = Parser.ListParser.Token().End().Parse(text);
-	                    list.Add(new Pair(new Symbol(fileName), new Ck2ScriptsParser.SyntaxUnits.Table(su)));
-                    }
-                    var node = Node.FromSyntaxUnit(new Ck2ScriptsParser.SyntaxUnits.Table(list));
-                    ScriptView.DataContext = node;
-                }
-                catch (Exception exception)
-                {
-                    ScriptView.DataContext = null;
-	                MessageBox.Show("Error in " + fileName + Environment.NewLine + Environment.NewLine + exception, "Error");
-                }
-            }
-	    }
-
-		private void L_OnClick(object sender, RoutedEventArgs e)
+		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
 		{
-			var node = (Node) (((FrameworkElement) sender)).DataContext;
-			MessageBox.Show(node.Localize(Helper));
+			var openFileDialog = new OpenFileDialog {Multiselect = true};
+			if (openFileDialog.ShowDialog() == true)
+			{
+				string fileName = string.Empty;
+				try
+				{
+					var list = new List<SyntaxUnit>();
+					foreach (string fn in openFileDialog.FileNames)
+					{
+						fileName = fn;
+						string text = File.ReadAllText(fn);
+						List<SyntaxUnit> su = Parser.ListParser.Token().End().Parse(text);
+						list.Add(new Pair(new Symbol(fileName), new Table(su)));
+					}
+					Node node = Node.FromSyntaxUnit(new Table(list));
+
+					//set up metadata
+					node.Metadata.IsRoot = true;
+					foreach (Node child in node.Children)
+					{
+						child.Metadata.IsFile = true;
+					}
+
+					ScriptView.DataContext = node;
+				}
+				catch (Exception exception)
+				{
+					ScriptView.DataContext = null;
+					MessageBox.Show("Error in " + fileName + Environment.NewLine + Environment.NewLine + exception, "Error");
+				}
+			}
 		}
 	}
 }

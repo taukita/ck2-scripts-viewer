@@ -61,6 +61,7 @@
     <Compile Include="SyntaxUnits\Symbol.cs" />
     <Compile Include="SyntaxUnits\Table.cs" />
     <Compile Include="TreeModel\Node.cs" />
+    <Compile Include="TreeModel\NodeMetadata.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

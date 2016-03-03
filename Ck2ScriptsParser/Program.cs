@@ -95,8 +95,8 @@ character_event = {
             LocalizationHelper helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
 
             Console.WriteLine();
-            Console.WriteLine(helper.Localize("amateurish_plotter", LocalizationHelper.English));
-			Console.WriteLine(helper.Localize("EVTDESC76000", LocalizationHelper.English));
+            Console.WriteLine(helper.TryLocalize("amateurish_plotter", LocalizationHelper.English));
+			Console.WriteLine(helper.TryLocalize("EVTDESC76000", LocalizationHelper.English));
 			 */
 
 			Console.ReadKey(false);

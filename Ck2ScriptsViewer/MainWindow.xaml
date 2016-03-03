@@ -16,12 +16,6 @@
 		<HierarchicalDataTemplate DataType="{x:Type treeModel:Node}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Path=FullName}" VerticalAlignment="Center"/>
-                <!--
-                <Button Margin="3, 3, 3, 3" 
-                        xml:space="preserve" 
-                        Visibility="{Binding Converter={ck2ScriptsViewer:LocalizableToVisibilityConverter}}"
-                        Click="L_OnClick"> L </Button>
-                -->
             </StackPanel>
 		</HierarchicalDataTemplate>
 	</Window.Resources>

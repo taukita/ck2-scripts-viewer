@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ck2ScriptObjects;
 using Ck2ScriptsParser.SyntaxUnits;
 
@@ -10,6 +8,8 @@ namespace Ck2ScriptsParser.TreeModel
 {
 	public class Node
 	{
+		public readonly NodeMetadata Metadata = new NodeMetadata();
+
 		public Node(string name, Table table)
 		{
 			Name = name;
@@ -29,31 +29,16 @@ namespace Ck2ScriptsParser.TreeModel
 			Children = new List<Node>();
 		}
 
-		public string Name
-		{
-			get;
-			set;
-		}
+		public string Name { get; set; }
 
-		public string Value
-		{
-			get;
-			set;
-		}
+		public string Value { get; set; }
 
 		public string FullName
 		{
-			get
-			{
-				return string.IsNullOrEmpty(Value) ? Name : Name + " = " + Value;
-			}
+			get { return string.IsNullOrEmpty(Value) ? Name : Name + " = " + Value; }
 		}
 
-		public List<Node> Children
-		{
-			get;
-			set;
-		}
+		public List<Node> Children { get; set; }
 
 		public static Node FromSyntaxUnit(SyntaxUnit su)
 		{
@@ -63,54 +48,45 @@ namespace Ck2ScriptsParser.TreeModel
 			}
 			if (su is Pair)
 			{
-				var pair = (Pair)su;
+				var pair = (Pair) su;
 				if (pair.Value is Symbol)
 				{
 					return new Node(pair.Key.ToString(), pair.Value.ToString());
 				}
 				if (pair.Value is Table)
 				{
-					return new Node(pair.Key.ToString(), (Table)pair.Value);
+					return new Node(pair.Key.ToString(), (Table) pair.Value);
 				}
 				throw new InvalidOperationException();
 			}
 			if (su is Table)
 			{
-				return new Node(string.Empty, (Table)su);
+				return new Node(string.Empty, (Table) su);
 			}
 			throw new InvalidOperationException();
 		}
 
-		public bool IsLocalizable
-		{
-			get
-			{
-				//return Name == "desc" || Name == "name";
-				return true;
-			}
-		}
-
-		public string Localize(LocalizationHelper helper, string language = null)
+		public string TryLocalize(LocalizationHelper helper, string language = null)
 		{
 			//Decisions or traits
 			{
-				var name = helper.Localize(Name, language ?? LocalizationHelper.English);
+				string name = helper.Localize(Name, language ?? LocalizationHelper.English);
 				if (name != null)
 				{
-					var nameDesc = helper.Localize(Name + "_desc", language ?? LocalizationHelper.English);
+					string nameDesc = helper.Localize(Name + "_desc", language ?? LocalizationHelper.English);
 					if (nameDesc != null)
 					{
-						var nameDeath = helper.Localize(Name + "_death", language ?? LocalizationHelper.English);
+						string nameDeath = helper.Localize(Name + "_death", language ?? LocalizationHelper.English);
 						return name + Environment.NewLine + nameDesc + Environment.NewLine + nameDeath;
 					}
 				}
 			}
 			//Objectives
 			{
-				var nameTitle = helper.Localize(Name + "_title", language ?? LocalizationHelper.English);
+				string nameTitle = helper.Localize(Name + "_title", language ?? LocalizationHelper.English);
 				if (nameTitle != null)
 				{
-					var nameDesc = helper.Localize(Name + "_desc", language ?? LocalizationHelper.English);
+					string nameDesc = helper.Localize(Name + "_desc", language ?? LocalizationHelper.English);
 					if (nameDesc != null)
 					{
 						return nameTitle + Environment.NewLine + nameDesc;
