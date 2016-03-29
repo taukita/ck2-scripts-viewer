@@ -39,6 +39,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TreeViewEx.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,6 +68,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BoolToVisibilityConverter.cs" />
+    <Compile Include="Filters\PictureFilter.cs" />
+    <Compile Include="INodeFilter.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="MicroMvvm\ObservableObject.cs" />
+    <Compile Include="MicroMvvm\RelayCommand.cs" />
     <Compile Include="NodeToTextConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -119,6 +127,7 @@
       <Name>Ck2ScriptsParser</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

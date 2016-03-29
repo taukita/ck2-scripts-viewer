@@ -29,6 +29,12 @@ namespace Ck2ScriptsParser.TreeModel
 			Children = new List<Node>();
 		}
 
+		public Node(string name, IEnumerable<Node> nodes)
+		{
+			Name = name;
+			Children = nodes.ToList();
+		}
+
 		public string Name { get; set; }
 
 		public string Value { get; set; }

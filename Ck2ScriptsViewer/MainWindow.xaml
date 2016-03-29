@@ -8,18 +8,18 @@
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:ck2ScriptsViewer="clr-namespace:Ck2ScriptsViewer"
 		mc:Ignorable="d" 
-        d:DataContext="{d:DesignInstance Type=treeModel:Node}"
+        d:DataContext="{d:DesignInstance Type=ck2ScriptsViewer:MainViewModel}"
 		
         Title="MainWindow" Height="600" Width="800">
-	
-	<Window.Resources>
-		<HierarchicalDataTemplate DataType="{x:Type treeModel:Node}" ItemsSource="{Binding Path=Children}">
+
+    <Window.Resources>
+        <HierarchicalDataTemplate DataType="{x:Type treeModel:Node}" ItemsSource="{Binding Path=Children}">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="{Binding Path=FullName}" VerticalAlignment="Center"/>
             </StackPanel>
-		</HierarchicalDataTemplate>
-	</Window.Resources>
-	
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,10 +27,11 @@
             <RowDefinition Height="200px"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Margin="5" Padding="5" Click="LoadButton_OnClick">Загрузить</Button>
-            <Button Margin="0,5,5,5" Padding="5" Click="ViewButton_OnClick">Просмотр</Button>
+            <Button Margin="5" Padding="5" Command="{Binding LoadCommand}">Загрузить</Button>
+            <Button Margin="0,5,5,5" Padding="5" Command="{Binding EditCommand}">Просмотр</Button>
+            <Button Margin="0,5,5,5" Padding="5" Command="{Binding FilterCommand}">Фильтрация</Button>
         </StackPanel>
-        <TreeView Margin="5,0,5,0" Name="ScriptView" ItemsSource="{Binding Path=Children}" Grid.Row="1"/>
+        <ck2ScriptsViewer:TreeViewEx Margin="5,0,5,0" x:Name="ScriptView" ItemsSource="{Binding Path=Root.Children}" SelectedItemEx="{Binding SelectedNode, Mode=TwoWay}" Grid.Row="1"/>
         <StackPanel Orientation="Vertical" Grid.Row="2">
             <TextBlock Margin="5"
                        Text="{Binding ElementName=ScriptView, Path=SelectedItem, Converter={ck2ScriptsViewer:NodeToTextConverter}}" 
