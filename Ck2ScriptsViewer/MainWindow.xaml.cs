@@ -44,7 +44,7 @@ namespace Ck2ScriptsViewer
 			}
 		}
 
-		private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+		private void LoadButton_OnClick(object sender, RoutedEventArgs e)
 		{
 			var openFileDialog = new OpenFileDialog {Multiselect = true};
 			if (openFileDialog.ShowDialog() == true)
@@ -76,6 +76,16 @@ namespace Ck2ScriptsViewer
 					ScriptView.DataContext = null;
 					MessageBox.Show("Error in " + fileName + Environment.NewLine + Environment.NewLine + exception, "Error");
 				}
+			}
+		}
+
+		private void ViewButton_OnClick(object sender, RoutedEventArgs e)
+		{
+			var node = ScriptView.SelectedItem as Node;
+			if (node != null && !node.Metadata.IsFile)
+			{
+				var nodeWindow = new NodeWindow {Owner = this, DataContext = node};
+				nodeWindow.ShowDialog();
 			}
 		}
 	}

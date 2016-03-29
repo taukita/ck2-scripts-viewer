@@ -27,7 +27,8 @@
             <RowDefinition Height="200px"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
-            <Button Margin="5" Padding="5" Click="ButtonBase_OnClick">Загрузить</Button>
+            <Button Margin="5" Padding="5" Click="LoadButton_OnClick">Загрузить</Button>
+            <Button Margin="0,5,5,5" Padding="5" Click="ViewButton_OnClick">Просмотр</Button>
         </StackPanel>
         <TreeView Margin="5,0,5,0" Name="ScriptView" ItemsSource="{Binding Path=Children}" Grid.Row="1"/>
         <StackPanel Orientation="Vertical" Grid.Row="2">

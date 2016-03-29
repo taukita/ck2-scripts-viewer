@@ -95,5 +95,15 @@ namespace Ck2ScriptsParser.TreeModel
 			}
 			return helper.Localize(Value, language ?? LocalizationHelper.English) ?? string.Empty;
 		}
+
+		public bool IsPair
+		{
+			get { return !string.IsNullOrEmpty(Value); }
+		}
+
+		public bool IsTable
+		{
+			get { return Children.Any(); }
+		}
 	}
 }
