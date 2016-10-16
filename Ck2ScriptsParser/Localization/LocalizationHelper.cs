@@ -64,7 +64,10 @@ namespace Ck2ScriptObjects
                     while (!textFieldParser.EndOfData)
                     {
                         values = textFieldParser.ReadFields();
-                        AddRecord(header, values);
+                        if (values != null && values[0].Length > 0 && values[0][0] != '#')
+                        {
+                            AddRecord(header, values);
+                        }
                     }
                 }
             }
