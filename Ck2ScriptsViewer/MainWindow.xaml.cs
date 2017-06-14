@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Configuration;
+using System.Threading.Tasks;
 using System.Windows;
 using Ck2ScriptObjects;
 using Ck2ScriptsParser.TreeModel;
@@ -22,7 +23,8 @@ namespace Ck2ScriptsViewer
 			{
 				lock (_sync)
 				{
-					_helper = new LocalizationHelper(@"E:\SteamLibrary\steamapps\common\Crusader Kings II\localisation\");
+					var localizationPath = ConfigurationManager.AppSettings["LocalizationPath"];
+					_helper = string.IsNullOrEmpty(localizationPath) ? new LocalizationHelper() : new LocalizationHelper(localizationPath);
 					Application.Current.Properties[typeof (LocalizationHelper)] = _helper;
 				}
 			});
